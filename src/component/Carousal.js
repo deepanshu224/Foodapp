@@ -12,13 +12,13 @@ function Carousal() {
                         </form>
                     </div>
                     <div className="carousel-item active" >
-                        <img src="https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..."></img>
+                        <img src="https://media.istockphoto.com/id/1829241109/photo/enjoying-a-brunch-together.jpg?b=1&s=612x612&w=0&k=20&c=Mn_EPBAGwtzh5K6VyfDmd7Q5eJFXSHhGWVr3T4WDQRo=" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..."></img>
                     </div>
                     <div className="carousel-item" >
-                        <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..."></img>
+                        <img src="https://www.foodiesfeed.com/wp-content/uploads/2023/06/burger-with-melted-cheese.jpg" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..."></img>
                     </div>
                     <div className="carousel-item">
-                        <img src="https://images.pexels.com/photos/1099680/pexels-photo-1099680.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..."></img>
+                        <img src="https://img.freepik.com/free-photo/fresh-pasta-with-hearty-bolognese-parmesan-cheese-generated-by-ai_188544-9469.jpg" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..."></img>
                     </div>
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
