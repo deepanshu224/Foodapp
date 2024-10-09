@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
-const mongouri = 'mongodb+srv://Myfood:sanjaynagar@cluster0.4ltd4ut.mongodb.net/MyFoodmern?retryWrites=true&w=majority';
+const mongouri = 'mongodb+srv://Myfood:sanjaynagar@cluster0.4ltd4ut.mongodb.net/MyFoodmern?retryWrites=true&w=majority'
+
+
 const mongodb = async() => {
      mongoose.set('strictQuery',true);
     await mongoose.connect(mongouri, {useNewUrlParser:true},async(err,res) => {
         if(err){
             console.log("---",err);
-        }else{
+        }
+        else
+        {
         console.log("connected");
         const fetch_data = await mongoose.connection.db.collection("foodData");
         fetch_data.find({}).toArray(async function(err,data){

@@ -1,60 +1,55 @@
-import React, { useState } from 'react';
+import React from 'react'
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Badge } from 'react-bootstrap';
-import Modal from '../Model';
-import Cart from './Cart';
-import { useCart } from './ContextReducer';
+function Login() {
+    let navigate = useNavigate();
+    const [credential, setcredential] = useState({email:"",password:""})
+    const handleclick = async (e) => {
+        e.preventDefault();
+        const response = await fetch("/api/loginuser", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({email:credential.email,password:credential.password})
+        })
+        const json = await response.json();
+        console.log(json);
+        if(!json.success){
+            alert("Invalid User Credential");
+        }
+        if(json.success){
+            localStorage.setItem("userEmail",credential.email);
+            localStorage.setItem("authToken",json.authtoken);
+            console.log(localStorage.getItem("authToken"))
+           navigate("/");
+        }
 
-function Navbar() {
-    const [cartView, setCartView] = useState(false);
-    let data = useCart();
-    const navigate = useNavigate();
-
-    const handlelogout = () => {
-        localStorage.removeItem("authToken");
-        navigate("/login");
     }
-
+    const onchange=(e)=>{
+        setcredential({...credential,[e.target.name]:e.target.value})
+    }
     return (
         <>
-            <nav className="navbar navbar-expand-lg" style={{ backgroundColor: 'rgb(72, 207, 203)', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
-                <div className='container-fluid'>
-                    {/* Updated to "Food Mania" */}
-                    <Link className="navbar-brand fs-1 mb-1" to="/" style={{ color: '#ffeb3b' }}>Food Mania</Link>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon" style={{ color: '#ffffff' }}></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav me-auto mb-2">
-                            <li className="nav-item active">
-                                {/* Updated to "Home" */}
-                                <Link className="nav-link active fs-5" aria-current="page" to="/" style={{ color: '#ffeb3b' }}>Home</Link>
-                            </li>
-                            {localStorage.getItem("authToken") &&
-                                <li className="nav-item active">
-                                    {/* Updated to use same color as "Food Mania" */}
-                                    <Link className="nav-link active fs-5" aria-current="page" to="/myOrder" style={{ color: '#ffeb3b' }}>My Orders</Link>
-                                </li>
-                            }
-                        </ul>
-                        {!localStorage.getItem("authToken")
-                            ? <div className="d-flex">
-                                <Link className="btn text-white mx-1" aria-current="page" to="/login" style={{ backgroundColor: '#87ceeb', border: 'none' }}>Login</Link>
-                                <Link className="btn text-white mx-1" aria-current="page" to="/createuser" style={{ backgroundColor: '#87ceeb', border: 'none' }}>SignUp</Link>
-                            </div>
-                            : <div>
-                                <div className="btn text-white mx-2" style={{ backgroundColor: '#87ceeb', border: 'none' }} onClick={() => { setCartView(true) }}>MyCart{"  "}
-                                    <Badge pill bg="danger">{data.length}</Badge>
-                                </div>
-                                {cartView ? <Modal onClose={() => { setCartView(false) }}><Cart /></Modal> : null}
-                                <div className="btn text-white mx-2" style={{ backgroundColor: '#87ceeb', border: 'none' }} onClick={handlelogout}>LogOut</div>
-                            </div>}
+            < div className='container'>
+
+                <form onSubmit={handleclick}>
+                    <div className="mb-3">
+                        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                        <input type="email" className="form-control" name='email' value={credential.email} onChange={onchange} id="exampleInputEmail1" aria-describedby="emailHelp" />
+                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                     </div>
-                </div>
-            </nav>
+                    <div className="mb-3">
+                        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                        <input type="password" className="form-control" id="exampleInputPassword1" onChange={onchange} name='password' value={credential.password}/>
+                    </div>
+                    <button type="submit" className=" m-3 btn btn-success">Submit</button>
+                    <Link to="/createuser" className='m-3 btn btn-danger'>I am a new User</Link>
+                </form>
+            </div>
         </>
-    );
+    )
 }
 
-export default Navbar;
+export default Login
